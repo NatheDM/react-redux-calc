@@ -1,34 +1,24 @@
-import React, { Component } from "react";
+import React from "react";
+import { connect } from "react-redux";
 
-class Counter extends Component {
-  constructor() {
-    super();
-    this.state = {
-      number: 0
-    };
-  }
+const mapStateToProps = state => ({
+  number: state.number
+});
 
-  upUp() {
-    this.setState({
-      number: this.state.number + 1
-    });
-  }
+const mapDispatchToProps = dispatch => ({
+  upUp: () => dispatch({ type: "UPUP" }),
+  downDown: () => dispatch({ type: "DOWNDOWN" }),
+  doubleDouble: () => dispatch({ type: "DOUBLEDOUBLE" })
+});
 
-  downDown() {
-    this.setState({
-      number: this.state.number - 1
-    });
-  }
+const Counter = props => (
+  <div>
+    <button onClick={() => props.upUp()}>+</button>
+    <h1>{props.number}</h1>
+    <button onClick={() => props.downDown()}>-</button>
+    <br />
+    <button onClick={() => props.doubleDouble()}>*2</button>
+  </div>
+);
 
-  render() {
-    return (
-      <div>
-        <button onClick={() => this.upUp()}>+</button>
-        <h1>{this.state.number}</h1>
-        <button onClick={() => this.downDown()}>-</button>
-      </div>
-    );
-  }
-}
-
-export default Counter;
+export default connect(mapStateToProps, mapDispatchToProps)(Counter);
